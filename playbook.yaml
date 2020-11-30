@@ -1,0 +1,18 @@
+  
+- hosts: docker
+  become: true
+  vars:
+  - install_directory: /opt/
+    USER: "e_n_v_i_""
+
+  tasks:
+  - name: "update the apt packages"
+    apt:
+      update_cache: "yes"
+      force_apt_get: "yes"
+
+  - name: "download and install docker"
+    apt:
+      name: "{{ DOCKER_PACKAGES }} "
+      state: present
+      force_apt_get: "yes"
