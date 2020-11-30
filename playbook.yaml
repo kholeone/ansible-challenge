@@ -2,21 +2,22 @@
   become: true
   vars:
   - install_directory: /opt/
+  USER: "e_n_v_i_"
+  
+- name: "docker download and installation"
+   apt:
+   name: "{{ DOCKER_PACKAGES }} "
+   state: present
+   force_apt_get: "yes"
 
-  - name: "download and install docker"
-    apt:
-      name: "{{ DOCKER_PACKAGES }} "
-      state: present
-      force_apt_get: "yes"
+- name: "docker installation #1"
+   apt:
+   name: "{{ DOCKER_PACKAGES }} "
+   state: present
+   force_apt_get: "yes"
 
-  - name: "download and install docker"
-    apt:
-      name: "{{ DOCKER_PACKAGES }} "
-      state: present
-      force_apt_get: "yes"
-
-        - name: "install docker"
-    apt:
-      name: "docker-ce"
-      state: present
-      force_apt_get: "yes"
+- name: "docker installation #2"
+  apt:
+  name: "docker-ce"
+  state: present
+  force_apt_get: "yes"
