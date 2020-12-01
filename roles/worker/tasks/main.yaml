@@ -1,0 +1,13 @@
+- name: Join Swarm-Worker-One
+  docker_swarm:
+    state: join
+    advertise_addr:
+    join_token: "{{ hostvars['join_token']['value'] }}"
+    remote_addrs: [ "10.154.0.18" ] 
+
+- name: Join Swarm-Worker-Three        
+  docker_swarm:
+    state: join
+    advertise_addr: 
+    join_token: "{{ hostvars['join_token']['value'] }}"
+    remote_addrs: [ "10.154.0.18" ]  
