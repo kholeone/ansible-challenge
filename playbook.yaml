@@ -1,23 +1,35 @@
-- hosts: docker
+- hosts: 127.0.0.1
+  connection: local
   become: true
-  vars:
-  - install_directory: /opt/
-  USER: "e_n_v_i_"
-  
-- name: "docker download and installation"
-   apt:
-   name: "{{ DOCKER_PACKAGES }} "
-   state: present
-   force_apt_get: "yes"
+  tasks:
+  - name: "Install dependecies"
+    apt:
+      pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3
+      - python3-pip
+  - name: "Add Docker APT key"
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  - name: "Add Docker APT repo"
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename|lower }} stable
 
-- name: "docker installation #1"
-   apt:
-   name: "{{ DOCKER_PACKAGES }} "
-   state: present
-   force_apt_get: "yes"
+  - name: "Install Docker"
+    apt: 
+     name: docker-ce
+     state: latest
+     update_cache: true
 
-- name: "docker installation #2"
-  apt:
-  name: "docker-ce"
-  state: present
-  force_apt_get: "yes"
+   - name "Docker service start"
+     service:
+       name: docker
+       state: started
+
+   - name: "Install Docker pip package"
+     pip: 
+       name: docker     
